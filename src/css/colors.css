@@ -1,0 +1,51 @@
+:root {
+  --ifm-heading-color: #333;
+  --ifm-color-primary: #338bff;
+  --ifm-color-black: #fff;
+  --ifm-color-success-dark: var(--ifm-color-primary);
+  --blockquote-background-color: rgba(118, 177, 255, 0.1);
+  --ifm-color-success-contrast-background: var(--blockquote-background-color);
+}
+.hero--primary {
+  --ifm-hero-background-color: #3a6999;
+}
+.hero__title {
+  color: #fff;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'], html[data-theme='dark'] {
+  --ifm-heading-color: #d6d6d6;
+  --ifm-color-primary: #5ba4f8;
+  --ifm-background-color: #242424;
+  --ifm-background-surface-color: #141414;
+  --ifm-color-success-contrast-background: var(--blockquote-background-color);
+} 
+
+.footer {
+  background-color: #2a4f75;
+}
+ 
+blockquote {
+  background-color: var(--blockquote-background-color);
+  border-left: var(--ifm-blockquote-border-left-width) solid var(--ifm-color-primary);
+}
+
+.markdown h1:first-child {
+  --ifm-h1-font-size: 1.9rem;
+}
+.markdown > h2 {
+  --ifm-h2-font-size: 1.68rem;
+}
+.markdown > h3 {
+  --ifm-h3-font-size: 1.5rem;
+}
+.markdown > h4 {
+  --ifm-h4-font-size: 1.35rem;
+}
+.markdown > h5 {
+  --ifm-h5-font-size: 1.2rem;
+}
+.markdown > h6 {
+  --ifm-h6-font-size: 1.05rem;
+}

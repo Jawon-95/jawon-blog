@@ -1,0 +1,12 @@
+body {
+    word-break: break-all;
+}
+
+:root {
+    --doc-sidebar-width: 330px !important;
+}
+
+#comments {
+    display: block;
+    margin-top: 3rem;
+}

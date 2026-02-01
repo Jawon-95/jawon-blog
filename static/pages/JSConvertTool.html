@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JS 转换工具</title>
+    <link rel="icon" href="https://www.txttool.com/favicon.ico">
+    <style>
+        /* 全局样式 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            gap: 2rem;
+        }
+
+        /* 容器样式 */
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 98%;
+            gap: 20px;
+        }
+
+        .tool {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 32%;
+        }
+
+        .tool h2 {
+            color: #2196f3;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        /* 输入输出框样式 */
+        .inputText,
+        .result {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #222;
+            color: #e0e0e0;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .inputText:focus,
+        .result:focus {
+            border-color: #2196f3;
+        }
+
+        /* 按钮样式 */
+        .copyBtn {
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 10px;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .copyBtn:hover {
+            background-color: #1976d2;
+        }
+
+        /* 提示框样式 */
+        #JawonAlertBox {
+            position: fixed;
+            max-width: 300px;
+            word-wrap: break-word;
+            z-index: 2147483647;
+            right: -340px;
+            top: 20px;
+            padding: 8px;
+            border: 1px solid #888;
+            border-radius: 10px;
+            background-color: #eee;
+            transition: all 0.4s;
+            color: #333;
+        }
+
+        /* 深度选择样式 */
+        .depth-select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #222;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>JS 转换工具</h1>
+    <div class="container">
+        <div class="tool conversion-js-to-string">
+            <h2>JS 转字符串</h2>
+            <textarea class="inputText" spellcheck="false" placeholder="请输入JS代码"></textarea>
+            <button class="copyBtn" onclick="convertJSToStringAndCopy()">转换并复制</button>
+            <textarea class="result" readonly></textarea>
+        </div>
+        <div class="tool conversion-string-to-js">
+            <h2>字符串转 JS CharCode</h2>
+            <textarea class="inputText" spellcheck="false" placeholder="请输入字符串"></textarea>
+            <button class="copyBtn" onclick="convertStringToJSAndCopy()">转换并复制</button>
+            <textarea class="result" readonly></textarea>
+        </div>
+        <div class="tool conversion-js-to-regex">
+            <h2>JS 转 Regex</h2>
+            <textarea class="inputText" spellcheck="false" placeholder="请输入JS代码"></textarea>
+            <button class="copyBtn" onclick="convertJSToRegexAndCopy()">转换并复制</button>
+            <textarea class="result" readonly></textarea>
+        </div>
+        <div class="tool conversion-js-to-eval-encrypt">
+            <h2>一键 eval 加密 JS</h2>
+            <select class="depth-select" id="depthSelect">
+                <option value="1">1层</option>
+                <option value="2">2层</option>
+                <option value="3">3层</option>
+                <option value="4">4层</option>
+                <option value="5">5层</option>
+            </select>
+            <textarea class="inputText" spellcheck="false" placeholder="请输入JS代码"></textarea>
+            <button class="copyBtn" onclick="convertToDeepEvalEncryptAndCopy()">转换并复制</button>
+            <textarea class="result" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        // JS 转字符串 ------------------------------------------------------------------------------------------------------
+        function convertJSToStringAndCopy() {
+            var inputText = document.querySelector(".conversion-js-to-string > .inputText").value;
+            var str_js = JSON.stringify(inputText).replace(/^"|"$/g, "");
+            document.querySelector(".conversion-js-to-string > .result").value = str_js;
+            copyToClipboard(str_js, "已成功转换并复制到剪贴板！", "复制失败，请重试！");
+        }
+
+        // 字符串转 JS ------------------------------------------------------------------------------------------------------
+        function convertStringToJSAndCopy() {
+            var inputText = document.querySelector(".conversion-string-to-js > .inputText").value;
+            var str_js = "String.fromCharCode(" + inputText.split('').map(char => char.charCodeAt(0)).join(',') + ")";
+            document.querySelector(".conversion-string-to-js > .result").value = str_js;
+            copyToClipboard(str_js, "已成功转换并复制到剪贴板！", "复制失败，请重试！");
+        }
+
+        // JS 转 Regex -----------------------------------------------------------------------------------------------------
+        // sabaka-babaka
+        function escapeRegExpSpecialCharacters(str) {
+            return str.replace(/[.*+?^{}()|[\]\\]/g, '\\$&');
+        }
+
+        // sabaka-babaka
+        function replaceMangledNames(str) {
+            let reg =
+                /(?:".+?")|(?:\b\d+\.\d+\b)|(?:\b\d+\b)|(?:\b(?:break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|false|finally|for|function|if|import|in|instanceof|new|null|return|super|switch|this|throw|true|try|typeof|var|void|while|with|toString|equals|hashCode|callableName)\b)|([\w$]+)/g;
+            let regExpText = str.replace(reg, (match, group1) => {
+                return group1 ? '[\\w$]+' : match;
+            });
+            return regExpText;
+        }
+
+        // sabaka-babaka
+        function escapeDollars(str) {
+            let reg = /(?:\[\\w\$\]\+)|(\$)/g;
+            let regExpText = str.replace(reg, (match, group1) => {
+                return group1 ? '\\$' : match;
+            });
+            return regExpText;
+        }
+
+        // sabaka-babaka
+        function makeRegexOfFuncText(text) {
+            if (!text) {
+                return;
+            }
+            text = escapeRegExpSpecialCharacters(text);
+            text = replaceMangledNames(text);
+            text = escapeDollars(text);
+            let regExp = RegExp(text).toString();
+            regExp = regExp.replace(/^\/|\/$/g, "");
+            return regExp;
+        }
+
+        function convertJSToRegexAndCopy() {
+            var inputText = document.querySelector(".conversion-js-to-regex > .inputText").value;
+            let str_regex = makeRegexOfFuncText(inputText);
+            document.querySelector(".conversion-js-to-regex > .result").value = str_regex;
+            copyToClipboard(str_regex, "已成功转换并复制到剪贴板！", "复制失败，请重试！");
+        }
+
+        // eval 加密部分 ----------------------------------------------------------------------------------------------------
+
+        // 字符串转CharCode
+        function StringToCharCodes(str) {
+            return '"' + str.split('').map(char => '\\x' + char.charCodeAt(0).toString(16).padStart(2, '0')).join('') + '"';
+        }
+
+        // 一键多层 eval 加密
+        function DeepEvalEncrypt(depth, script_str) {
+            script_str = `window[String.fromCharCode(101,118,97,108)](${StringToCharCodes(script_str)});`;
+            depth--;
+            if (depth > 0) script_str = DeepEvalEncrypt(depth, script_str);
+            return script_str;
+        }
+
+        function convertToDeepEvalEncryptAndCopy() {
+            var inputText = document.querySelector(".conversion-js-to-eval-encrypt > .inputText").value;
+            var depth = parseInt(document.getElementById('depthSelect').value);
+            var encryptedStr = DeepEvalEncrypt(depth, inputText);
+            document.querySelector(".conversion-js-to-eval-encrypt > .result").value = encryptedStr;
+            copyToClipboard(encryptedStr, "已成功转换并复制到剪贴板！", "复制失败，请重试！");
+        }
+        // -----------------------------------------------------------------------------------------------------------------
+
+
+
+        function copyToClipboard(text, successMsg, errorMsg) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    sendAlertBox(successMsg);
+                }).catch((error) => {
+                    console.error('复制失败:', error);
+                    fallbackCopyTextToClipboard(text, successMsg, errorMsg);
+                });
+            } else {
+                fallbackCopyTextToClipboard(text, successMsg, errorMsg);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text, successMsg, errorMsg) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-99999px";
+            textArea.style.top = "-99999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                var successful = document.execCommand('copy');
+                if (successful) {
+                    sendAlertBox(successMsg);
+                } else {
+                    sendAlertBox(errorMsg, "red");
+                }
+            } catch (err) {
+                console.error('复制失败:', err);
+                sendAlertBox(errorMsg, "red");
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function sendAlertBox(msgStr, cssColor = "#333", stayTime = 2000) {
+            var alertBox = document.querySelector("#JawonAlertBox");
+            if (!alertBox) {
+                var alertBox = document.createElement("div");
+                alertBox.id = "JawonAlertBox";
+                alertBox.style.cssText = `position: fixed;max-width: 300px; word-wrap: break-word;
+                    z-index: 2147483647;right: -340px;top: 20px;padding: 8px; border: 1px solid #888;
+                    border-radius: 10px;background-color: #eee; transition: all 0.4s;`;
+                document.body.appendChild(alertBox);
+                setTimeout(() => {
+                    alertBox.style.right = "10px";
+                }, 50);
+            } else {
+                alertBox.style.right = "10px";
+            }
+            alertBox.innerHTML = msgStr;
+            alertBox.style.color = cssColor;
+            clearTimeout(alertBox.hideTimeout);
+            alertBox.hideTimeout = setTimeout(() => {
+                alertBox.style.right = "-340px";
+            }, stayTime);
+        }
+    </script>
+</body>
+
+</html>

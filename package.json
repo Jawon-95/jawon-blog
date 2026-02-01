@@ -1,0 +1,50 @@
+{
+  "name": "jawon-blog",
+  "version": "0.0.0",
+  "private": false,
+  "scripts": {
+
+    "start": "node scripts/copyDTS.js && docusaurus start",
+    "build": "node scripts/copyDTS.js && docusaurus build",
+    "push": "git add . && git commit -m '1' && git push -f origin main",
+    "pull": "git fetch origin main && git reset --hard origin/main",
+    "docusaurus": "docusaurus",
+    
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.7.0",
+    "@docusaurus/preset-classic": "3.7.0",
+    "@easyops-cn/docusaurus-search-local": "^0.48.0",
+    "@giscus/react": "^3.1.0",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.0.0",
+    "prism-react-renderer": "^2.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.7.0",
+    "@docusaurus/types": "3.7.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0"
+  }
+}
