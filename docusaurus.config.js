@@ -81,7 +81,7 @@ const config = {
         //   position: 'right'
         // },
         {
-          href: 'https://github.com/Jawon2870/JawonBlog',
+          href: 'https://github.com/Jawon-95/jawon-blog',
           label: 'GitHub',
           position: 'right',
         },
@@ -103,8 +103,8 @@ const config = {
     },
 
     giscus: {
-      repo: "Jawon2870/JawonBlog",
-      repoId: "R_kgDONV8hTQ",
+      repo: "Jawon-95/jawon-blog",
+      repoId: "R_kgDORF-svA",
       category: 'General',
       categoryId: "DIC_kwDONV8hTc4Cl9O0",
       lang: "zh-CN",
