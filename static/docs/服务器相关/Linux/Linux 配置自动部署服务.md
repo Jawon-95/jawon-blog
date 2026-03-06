@@ -38,13 +38,13 @@ sudo systemctl start my-server
 
 ```
 [Unit]
-Description=pawsome-server-deploy
+Description=server-deploy
 After=network.target
 
 [Service]
 Type=oneshot
 User=root
-ExecStart=/bin/bash /home/ubuntu/pawsome-server/scripts/deploy.sh
+ExecStart=/bin/bash /home/ubuntu/server/scripts/deploy.sh
 ```
 
 #### 后端接口：
@@ -65,7 +65,7 @@ export function deploy(req, res) {
     console.log('[tip] Will redeploy the server.');
 
     // 执行部署服务
-    exec('sudo systemctl start pawsome-server-deploy', (err, stdout, stderr) => {
+    exec('sudo systemctl start server-deploy', (err, stdout, stderr) => {
         if (err) {
             console.error('启动部署服务失败', err);
             return;
