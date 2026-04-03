@@ -207,8 +207,9 @@ docker exec -it name_database mysql -uroot -p
 
 ### 服务管理
 
+> 下面创建一个开机自启，意外终止后会自动重启的 Node.js 服务
+
 ```bash
-# 案例：创建一个开机自启，意外终止后会自动重启的 Node.js 服务
 # 在 /etc/systemd/system 创建 service 文件
 sudo nano /etc/systemd/system/my-node-app.service
 
