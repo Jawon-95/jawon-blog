@@ -99,7 +99,7 @@ Set-Service -Name sshd -StartupType 'Automatic'
 
 ![1775791200732](image/cloudflaretunnel内网穿透/1775791200732.png)
 
-之后在访问策略选项中，点击创建新策略，按照下图配置，使用邮箱验证码进行验证，这里实测qq邮箱收不到验证码，outlook 邮箱可以。
+之后在访问策略选项中，点击创建新策略，按照下图配置，使用邮箱验证码进行验证。
 
 ![1775791353472](image/cloudflaretunnel内网穿透/1775791353472.png)
 
