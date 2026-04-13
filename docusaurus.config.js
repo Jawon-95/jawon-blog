@@ -11,12 +11,14 @@ import { themes as prismThemes } from 'prism-react-renderer';
 let date = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai' })
   .format(new Date()).replaceAll("/", "-");
 
+const siteUrl = 'https://jawon.barveasy.com';
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Jawon's blog",
   tagline: 'Welcome!',
   favicon: 'img/favicon.png',
-  url: 'https://jawon.netlify.app',
+  url: siteUrl,
   baseUrl: '/',
 
   onBrokenLinks: 'throw',
@@ -86,7 +88,7 @@ const config = {
           position: 'right',
         },
         {
-          href: 'https://jawon.netlify.app/pages/JSConvertTool.html',
+          href: siteUrl + '/pages/JSConvertTool.html',
           label: 'JS转换工具',
           position: 'right',
         },
