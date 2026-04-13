@@ -98,7 +98,7 @@ node_modules/
 .vercel
 ```
 
-最后，将项目推送至 github 仓库，使用 vercel 连接该仓库，一键部署即可（此步骤网上有大量教程）。部署成功后，访问生成的域名，能够正常显示前端页面，访问未知路径，能够正常显示预设置的 404 not found（对于国内无法访问 vercel 生成的域名的问题，可参考 [docusaurus+github+vercel+cloudflare 免费部署博客](https://jawon.netlify.app/docs/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/docusaurus+github+vercel%) 中的解决方案）。
+最后，将项目推送至 github 仓库，使用 vercel 连接该仓库，一键部署即可（此步骤网上有大量教程）。部署成功后，访问生成的域名，能够正常显示前端页面，访问未知路径，能够正常显示预设置的 404 not found（对于国内无法访问 vercel 生成的域名的问题，可参考 [docusaurus+github+vercel+cloudflare 免费部署博客](../建站/docusaurus+github+vercel免费部署博客) 中的解决方案）。
 
 但是但是但是，这种部署方式有一个缺陷，那就是大文件无法加载，差不多大小为几兆的图片就会加载失败，因为 vercel 平台的限制，但如果不使用 express，部署成纯静态页面的话就不会有这个问题！！！
 

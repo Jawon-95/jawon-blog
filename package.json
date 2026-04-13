@@ -3,13 +3,11 @@
   "version": "0.0.0",
   "private": false,
   "scripts": {
-
     "start": "node scripts/copyDTS.js && docusaurus start",
     "build": "node scripts/copyDTS.js && docusaurus build",
     "push": "git add . && git commit -m '1' && git push -f origin main",
     "pull": "git fetch origin main && git reset --hard origin/main",
     "docusaurus": "docusaurus",
-    
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",

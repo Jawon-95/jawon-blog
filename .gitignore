@@ -1,3 +1,6 @@
+# 静态复制资源
+/static/docs/
+
 # Dependencies
 node_modules/
 
