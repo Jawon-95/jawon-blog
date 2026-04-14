@@ -11,7 +11,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 let date = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai' })
   .format(new Date()).replaceAll("/", "-");
 
-const siteUrl = 'https://jawon.barveasy.com';
+const siteUrl = 'https://jawon.braveasy.com';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
