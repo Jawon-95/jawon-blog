@@ -30,6 +30,16 @@ const config = {
   },
 
   staticDirectories: ['static'],
+
+  // Google AdSense - 注入到每个页面的 <head> 中
+  scripts: [
+    {
+      src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2220563956316376',
+      async: true,
+      crossorigin: 'anonymous',
+    },
+  ],
+
   presets: [
     [
       'classic',
@@ -112,6 +122,16 @@ const config = {
       lang: "zh-CN",
     }
   },
+
+  plugins: [
+    // 自定义插件：扫描 docs 生成「最近更新」文章列表（供 RecentArticles 组件使用）
+    [
+      require.resolve('./plugins/recentArticles'),
+      {
+        maxItems: 8,
+      },
+    ],
+  ],
 
   themes: [
     [

@@ -48,7 +48,9 @@ git fetch origin master; git reset --hard origin/master
 
 #### 文件名缺陷
 
-文章的文件名不能含有英文括号，否则改文章对应的页面会显示找不到页面，这是 docusaurus 自身的缺陷。
+docusaurus 自身缺陷：文章的文件名如果含有**英文括号**（如 `xxx(4).md`），对应页面的路由会匹配失败，显示找不到页面（其路由依赖的 path-to-regexp 会把括号当作正则分组）。
+
+规避方式：此类文件在 frontmatter 中手动指定不带括号的 `slug`，例如 `slug: /xxx-4`。当前仓库内的文章文件名均使用全角括号，不受影响。
 
 #### 文章标题
 
