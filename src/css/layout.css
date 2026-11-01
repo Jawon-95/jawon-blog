@@ -1,4 +1,5 @@
-body {
+/* 仅文档正文强制断行，产品页/政策页保持英文单词完整 */
+.theme-doc-markdown {
     word-break: break-all;
 }
 

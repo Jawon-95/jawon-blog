@@ -1,6 +1,6 @@
 # 项目说明
 
-### Jawon's Blog
+### JawonStudio
 
 这是一个基于 [Docusaurus](https://docusaurus.io/) 的个人博客。
 
@@ -55,3 +55,12 @@ docusaurus 自身缺陷：文章的文件名如果含有**英文括号**（如 `
 #### 文章标题
 
 如果文章中第一行的格式为一级标题，那么第一行将成为此篇文章的的标题，否则标题为该文章的文件名。
+
+### 售卖 JS Convert Tool
+
+- 商家信息、价格、Stripe Payment Link 统一在 `src/data/business.js` 中修改。
+- 生成激活码：
+
+```bash
+node scripts/gen-license.mjs annual
+```

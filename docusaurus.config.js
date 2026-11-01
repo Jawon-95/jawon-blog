@@ -15,8 +15,8 @@ const siteUrl = 'https://jawon.braveasy.com';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Jawon's blog",
-  tagline: 'Welcome!',
+  title: 'JawonStudio',
+  tagline: 'Developer tools & technical notes by Jawon',
   favicon: 'img/favicon.png',
   url: siteUrl,
   baseUrl: '/',
@@ -80,26 +80,20 @@ const config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: "Jawon's blog",
+      title: 'JawonStudio',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'JawonStudio Logo',
         src: 'img/logo.png',
       },
       hideOnScroll: true,
       items: [
-        // {
-        //   to: '/blog',
-        //   label: '博客',
-        //   position: 'right'
-        // },
+        { to: '/js-tool', label: 'JS Convert Tool', position: 'left' },
+        { to: '/js-tool#pricing', label: 'Pricing', position: 'left' },
+        { to: '/docs/简介', label: 'Blog', position: 'left' },
+        { to: '/contact', label: 'Contact', position: 'right' },
         {
           href: 'https://github.com/Jawon-95/jawon-blog',
           label: 'GitHub',
-          position: 'right',
-        },
-        {
-          href: siteUrl + '/pages/JSConvertTool.html',
-          label: 'JS转换工具',
           position: 'right',
         },
       ],
@@ -107,7 +101,38 @@ const config = {
     startPath: '/docs/简介',
     footer: {
       style: 'dark',
-      copyright: `Powered by docusaurus | Create at: 2025-1-17. Last Update: ${date}`,
+      links: [
+        {
+          title: 'Products',
+          items: [
+            { label: 'JS Convert Tool', to: '/js-tool' },
+            { label: 'Pricing', to: '/js-tool#pricing' },
+          ],
+        },
+        {
+          title: 'Support',
+          items: [
+            { label: 'Contact', to: '/contact' },
+            { label: 'Refund Policy', to: '/refund' },
+            { label: 'topro@braveasy.com', href: 'mailto:topro@braveasy.com' },
+          ],
+        },
+        {
+          title: 'Legal',
+          items: [
+            { label: 'Privacy Policy', to: '/privacy' },
+            { label: 'Terms of Service', to: '/terms' },
+          ],
+        },
+        {
+          title: 'More',
+          items: [
+            { label: 'Blog', to: '/docs/简介' },
+            { label: 'GitHub', href: 'https://github.com/Jawon-95' },
+          ],
+        },
+      ],
+      copyright: `© ${new Date().getFullYear()} JawonStudio · Powered by docusaurus | Create at: 2025-1-17. Last Update: ${date}`,
     },
     prism: {
       theme: prismThemes.oneLight,
