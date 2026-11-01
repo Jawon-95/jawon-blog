@@ -4,6 +4,8 @@
 
 这是一个基于 [Docusaurus](https://docusaurus.io/) 的个人博客。
 
+本项目也承载 `www.braveasy.com` 的统一 Stripe 支付后端。接入 TOPRO 或后续其他网站/产品前，请阅读 [统一支付接入与发布文档](./UNIFIED_PAYMENTS.md)。
+
 ### 部署步骤
 
 一键安装依赖

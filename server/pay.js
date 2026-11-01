@@ -4,7 +4,7 @@
  *
  * 环境变量（本地写在 .env.local，线上在 Cloudflare Pages → 设置 → 变量和机密）：
  *   STRIPE_SECRET_KEY   必填，sk_test_... / sk_live_...
- *   SITE_URL            可选，本站地址，默认取请求域名
+ *   SITE_URL            生产默认 https://www.braveasy.com，本地测试需显式配置
  */
 import Stripe from 'stripe';
 
@@ -35,7 +35,11 @@ export function errorResponse(e) {
 }
 
 export function siteOrigin(request, env) {
-  return (env.SITE_URL || new URL(request.url).origin).replace(/\/+$/, '');
+  const url = new URL(env.SITE_URL || 'https://www.braveasy.com');
+  const local = ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname);
+  if ((url.protocol !== 'https:' && !(local && env.PAY_ALLOW_TEST === '1')) || url.username || url.password
+    || url.pathname !== '/' || url.search || url.hash) throw new HttpError(503, 'SITE_URL must be an HTTPS origin (or localhost in test mode).');
+  return url.origin;
 }
 
 /**

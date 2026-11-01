@@ -5,17 +5,23 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
+import { localD1 } from './local-d1.mjs';
+import { serveBlogBuild } from './serve-blog-build.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const envFile = path.join(root, '.env.local');
 if (fs.existsSync(envFile)) process.loadEnvFile(envFile);
 const PORT = Number(process.env.DEV_API_PORT) || 3001;
+const env = { ...process.env, PAYMENTS_DB: localD1(process.env.PAYMENTS_LOCAL_DB || path.join(root, '.wrangler', 'unified-payments.sqlite')) };
 
 http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
-  const name = /^\/api\/([\w-]+)\/?$/.exec(url.pathname)?.[1];
-  const file = name && path.join(root, 'functions', 'api', `${name}.js`);
+  const api = /^\/api\/([\w/-]+)\/?$/.exec(url.pathname)?.[1];
+  const client = /^\/pay\/([a-z0-9-]+)\/?$/.exec(url.pathname)?.[1];
+  const file = api ? path.join(root, 'functions', 'api', `${api.replace(/\/$/, '')}.js`)
+    : client ? path.join(root, 'functions', 'pay', '[client].js') : null;
   if (!file || !fs.existsSync(file)) {
+    if (req.method === 'GET' && serveBlogBuild(root, url.pathname, res)) return;
     res.writeHead(404).end('Not found');
     return;
   }
@@ -34,7 +40,7 @@ http.createServer(async (req, res) => {
       headers: req.headers,
       body: ['GET', 'HEAD'].includes(req.method) ? undefined : Buffer.concat(chunks),
     });
-    const response = await handler({ request, env: process.env, params: {}, waitUntil: () => {} });
+    const response = await handler({ request, env, params: client ? { client } : {}, waitUntil: promise => promise.catch(console.error) });
     res.writeHead(response.status, Object.fromEntries(response.headers));
     res.end(Buffer.from(await response.arrayBuffer()));
   } catch (e) {

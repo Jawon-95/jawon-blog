@@ -5,6 +5,9 @@
   "scripts": {
     "start": "docusaurus start",
     "dev:api": "node scripts/dev-api.mjs",
+    "test:payments": "node --test test/payments.test.mjs",
+    "test:payments:sandbox": "node scripts/sandbox-payments.mjs",
+    "test:payments:pages": "node scripts/check-pages-payments.mjs",
     "build": "docusaurus build",
     "push": "git add . && git commit -m '1' && git push -f origin main",
     "pull": "git fetch origin main && git reset --hard origin/main",

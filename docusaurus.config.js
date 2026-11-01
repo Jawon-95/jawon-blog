@@ -11,7 +11,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 let date = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai' })
   .format(new Date()).replaceAll("/", "-");
 
-const siteUrl = 'https://jawon.braveasy.com';
+const siteUrl = 'https://www.braveasy.com';
 
 // 本地开发时把 /api/* 转发给 scripts/dev-api.mjs（线上由 Cloudflare Pages Functions 运行 functions/ 目录）
 function devApiProxy() {

@@ -81,7 +81,7 @@ export async function startCheckout(body) {
   const res = await fetch('/api/checkout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ ...body, order_id: crypto.randomUUID().replaceAll('-', '') }),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok || !data.url) throw new Error(data.error || `Payment service unavailable (${res.status}).`);

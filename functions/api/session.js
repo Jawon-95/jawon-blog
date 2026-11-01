@@ -5,6 +5,8 @@
 import { plans } from '../../src/data/business.js';
 import { makeLicense } from '../../src/components/JsTool/licenseCore.mjs';
 import { stripe, json, errorResponse, settledAmount, HttpError } from '../../server/pay.js';
+import { paymentDB } from '../../server/payment-store.js';
+import { CHECKOUT_NAME, reconcilePayment } from '../../server/payment-gateway.js';
 
 function expiryFrom(createdSec, months) {
   const d = new Date(createdSec * 1000);
@@ -16,19 +18,26 @@ export async function onRequestGet({ request, env }) {
   try {
     const id = new URL(request.url).searchParams.get('session_id') || '';
     if (!/^cs_(test|live)_\w+$/.test(id)) throw new HttpError(400, 'Invalid session id.');
+    const row = await (await paymentDB(env)).prepare('SELECT * FROM gateway_orders WHERE session_id = ?').bind(id).first();
+    if (row && row.client_id !== 'blog') throw new HttpError(404, 'Order not found.');
     const s = await stripe(env).checkout.sessions.retrieve(id);
-    const kind = s.metadata?.kind;
-    const plan = plans.find((p) => p.id === s.metadata?.plan);
+    if (!s.livemode && env.PAY_ALLOW_TEST !== '1') throw new HttpError(409, 'Test payments are disabled.');
+    if (row) await reconcilePayment(env, row, s);
+    // Keep older blog checkout links usable across this deployment.
+    const details = row ? JSON.parse(row.details) : s.metadata || {};
+    const kind = details.kind;
+    const plan = plans.find((p) => p.id === details.plan);
     if (!(kind === 'custom' || (kind === 'js-tool' && plan))) throw new HttpError(404, 'Order not found.');
 
     const paid = s.payment_status === 'paid';
     const { amount, currency } = settledAmount(s);
+    if (plan && ((!row && amount !== Math.round(plan.price * 100)) || currency !== 'usd')) throw new HttpError(409, 'Payment amount mismatch.');
     const out = {
       paid,
       status: s.status,
       amount: (amount ?? 0) / 100,
       currency,
-      item: s.metadata.item,
+      item: row ? CHECKOUT_NAME : s.metadata.item,
       email: s.customer_details?.email || '',
       livemode: s.livemode,
     };
