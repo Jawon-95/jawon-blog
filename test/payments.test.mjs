@@ -72,6 +72,8 @@ test('all checkout entries use exact title, omit both descriptions, and use www 
     assert.equal(p.has('line_items[0][price_data][product_data][description]'), false);
     assert.equal(p.has('payment_intent_data[description]'), false);
     assert.equal(p.get('adaptive_pricing[enabled]'), 'false');
+    assert.equal(p.has('customer_email'), false, 'do not automatically start Link authentication by prefilling email');
+    assert.equal(p.has('excluded_payment_method_types[0]'), false, 'Link remains available');
     assert.equal(new URL(p.get('success_url')).origin, 'https://www.braveasy.com');
     assert.equal(new URL(p.get('cancel_url')).origin, 'https://www.braveasy.com');
   }

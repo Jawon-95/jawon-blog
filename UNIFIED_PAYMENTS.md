@@ -252,3 +252,9 @@ TOPRO 测试默认寻找当前目录结构下的 jawon-blog 本地 SQLite 适配
 脚本只操作本次新建的沙箱测试数据，不部署、不改生产 Webhook、不发真实邮件。邮件在本地使用 `MAIL_LOG_ONLY=1`；这不等于验证了生产 Resend 投递。
 
 `npm run test:payments:pages` 还会将实际博客 Pages Functions 编译进本地 workerd，在独立 D1 中验证签名接口、Webhook 验签、真实沙箱 Checkout 创建、状态查询和动态返回页；本次未付款的测试 Session 会自动过期。
+
+### Checkout 邮箱预填与 Link
+
+网关仍将业务后端提交的邮箱保存到自己的订单表，但不再传 `customer_email` 给 Stripe Checkout，避免已注册 Link 的邮箱在打开付款页时直接触发 Link 验证。Link 保持启用，支付方式仍由 Stripe 动态选择；后台 Link 设置中已关闭“预填客户信息”。Stripe 托管页面对已登录 Link 的浏览器仍可能使用其记忆状态，本站不能保证强制覆盖每个浏览器的首选方式。
+
+因此产品必须根据自己已认证的账号和订单发货、发邮件，不能根据用户在 Stripe 另行填写的邮箱重新绑定账号。TOPRO 将下单语言持久化到订单，由 TOPRO 发送买家邮件和商家通知；其中邮件失败会使签名通知要求重试，已完成的激活码交付不会回滚。

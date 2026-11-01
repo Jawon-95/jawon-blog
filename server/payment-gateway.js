@@ -71,7 +71,9 @@ export async function createPayment(env, client, input, details = {}) {
       mode: 'payment',
       adaptive_pricing: { enabled: false },
       line_items: [{ quantity: 1, price_data: { currency: 'usd', unit_amount: amount, product_data: { name: CHECKOUT_NAME } } }],
-      ...(email && { customer_email: email }),
+      // Keep the account email in our ledger. Prefilling customer_email can immediately
+      // launch Link's verification flow instead of showing the normal payment form.
+      // Leave Link and the other dashboard-enabled payment methods available.
       client_reference_id: row.id,
       metadata: { payment_id: row.id },
       success_url: success, cancel_url: cancel,

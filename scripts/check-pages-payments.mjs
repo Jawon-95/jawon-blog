@@ -43,10 +43,11 @@ try {
   assert.equal(unauth.status, 404); assert.match((await unauth.json()).error, /client/); checks.push('actual Pages Functions reject unauthenticated product requests');
   const webhook = await fetch(origin + '/api/pay/stripe-webhook', { method: 'POST', body: '{}' });
   assert.equal(webhook.status, 400); checks.push('actual Pages webhook rejects missing Stripe signature');
-  const create = await signed('/api/payments/create', { order_id: crypto.randomUUID().replaceAll('-', ''), amount_cents: 600, currency: 'usd' });
+  const create = await signed('/api/payments/create', { order_id: crypto.randomUUID().replaceAll('-', ''), amount_cents: 600, currency: 'usd', email: 'link-checkout-probe@example.test' });
   const payment = await create.json(); assert.equal(create.status, 200, JSON.stringify(payment)); sessions.push(payment.session_id);
   const checkout = await stripe.checkout.sessions.retrieve(payment.session_id);
   assert.equal(checkout.livemode, false); assert.equal(checkout.amount_total, 600); assert.equal(new URL(checkout.success_url).origin, origin);
+  assert.equal(checkout.customer_email, null, 'account email must not automatically trigger Link authentication');
   checks.push('actual Pages + D1 + WebCrypto create a real sandbox Checkout');
   const query = await signed('/api/payments/status', { payment_id: payment.payment_id });
   assert.equal(query.status, 200); assert.equal((await query.json()).paid, false); checks.push('actual Pages signed status query works');
