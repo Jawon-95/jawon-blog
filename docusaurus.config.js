@@ -13,6 +13,21 @@ let date = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai' })
 
 const siteUrl = 'https://jawon.braveasy.com';
 
+// 本地开发时把 /api/* 转发给 scripts/dev-api.mjs（线上由 Cloudflare Pages Functions 运行 functions/ 目录）
+function devApiProxy() {
+  return {
+    name: 'dev-api-proxy',
+    configureWebpack(_config, isServer) {
+      if (isServer) return {};
+      return {
+        devServer: {
+          proxy: [{ context: ['/api'], target: `http://localhost:${process.env.DEV_API_PORT || 3001}` }],
+        },
+      };
+    },
+  };
+}
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'JawonStudio',
@@ -73,9 +88,10 @@ const config = {
   /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
   themeConfig: {
     colorMode: {
-      defaultMode: 'light',
+      // 与 TOPRO 官网一致默认深色，可在右上角切换浅色
+      defaultMode: 'dark',
       disableSwitch: false,
-      respectPrefersColorScheme: true,
+      respectPrefersColorScheme: false,
     },
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
@@ -87,56 +103,28 @@ const config = {
       },
       hideOnScroll: true,
       items: [
-        { to: '/js-tool', label: 'JS Convert Tool', position: 'left' },
-        { to: '/js-tool#pricing', label: 'Pricing', position: 'left' },
         { to: '/docs/简介', label: 'Blog', position: 'left' },
-        { to: '/contact', label: 'Contact', position: 'right' },
-        {
-          href: 'https://github.com/Jawon-95/jawon-blog',
-          label: 'GitHub',
-          position: 'right',
-        },
+        { to: '/js-tool', label: 'JS Convert Tool', position: 'left' },
+        { to: '/pay', label: 'Custom Work', position: 'left' },
       ],
     },
     startPath: '/docs/简介',
     footer: {
-      style: 'dark',
+      style: 'light',
       links: [
-        {
-          title: 'Products',
-          items: [
-            { label: 'JS Convert Tool', to: '/js-tool' },
-            { label: 'Pricing', to: '/js-tool#pricing' },
-          ],
-        },
-        {
-          title: 'Support',
-          items: [
-            { label: 'Contact', to: '/contact' },
-            { label: 'Refund Policy', to: '/refund' },
-            { label: 'topro@braveasy.com', href: 'mailto:topro@braveasy.com' },
-          ],
-        },
-        {
-          title: 'Legal',
-          items: [
-            { label: 'Privacy Policy', to: '/privacy' },
-            { label: 'Terms of Service', to: '/terms' },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            { label: 'Blog', to: '/docs/简介' },
-            { label: 'GitHub', href: 'https://github.com/Jawon-95' },
-          ],
-        },
+        { label: 'Blog', to: '/docs/简介' },
+        { label: 'JS Convert Tool', to: '/js-tool' },
+        { label: 'Custom Work', to: '/pay' },
+        { label: 'Refund Policy', to: '/refund' },
+        { label: 'Privacy Policy', to: '/privacy' },
+        { label: 'Terms of Service', to: '/terms' },
+        { label: 'topro@braveasy.com', href: 'mailto:topro@braveasy.com' },
       ],
-      copyright: `© ${new Date().getFullYear()} JawonStudio · Powered by docusaurus | Create at: 2025-1-17. Last Update: ${date}`,
+      copyright: `© ${new Date().getFullYear()} JawonStudio · Last updated ${date}`,
     },
     prism: {
       theme: prismThemes.oneLight,
-      darkTheme: prismThemes.vsDark,
+      darkTheme: prismThemes.oneDark,
     },
 
     giscus: {
@@ -149,11 +137,12 @@ const config = {
   },
 
   plugins: [
+    devApiProxy,
     // 自定义插件：扫描 docs 生成「最近更新」文章列表（供 RecentArticles 组件使用）
     [
       require.resolve('./plugins/recentArticles'),
       {
-        maxItems: 8,
+        maxItems: 12,
       },
     ],
   ],

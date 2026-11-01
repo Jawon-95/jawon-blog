@@ -4,6 +4,7 @@
   "private": false,
   "scripts": {
     "start": "docusaurus start",
+    "dev:api": "node scripts/dev-api.mjs",
     "build": "docusaurus build",
     "push": "git add . && git commit -m '1' && git push -f origin main",
     "pull": "git fetch origin main && git reset --hard origin/main",
@@ -24,7 +25,8 @@
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "stripe": "^23.1.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.7.0",

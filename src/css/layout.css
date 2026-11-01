@@ -11,3 +11,39 @@
     display: block;
     margin-top: 3rem;
 }
+
+/* 分区小标题：大写 + 字距 + 绿点（同 TOPRO 的 eyebrow） */
+.jw-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.9rem;
+    color: var(--jw-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+.jw-kicker::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--jw-accent);
+    box-shadow: 0 0 0 4px var(--jw-accent-soft);
+}
+
+/* 大标题：细字重 + 紧字距 */
+.jw-display {
+    font-weight: 600 !important;
+    letter-spacing: -0.045em !important;
+    line-height: 1.02 !important;
+}
+
+/* 玻璃面板（流体玻璃：半透明 + 模糊 + 内高光） */
+.jw-glass {
+    background: var(--jw-surface);
+    box-shadow: var(--jw-shadow);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+}

@@ -23,7 +23,9 @@ Prices include all features. Each purchase is a one-time payment for the period 
 
 ## 2. Delivery
 
-After payment we email an activation key to the address you provided, within 48 hours. The license period starts on the day the key is issued.
+Your activation key is shown on screen right after the payment succeeds (keep the page or copy the key). If anything goes wrong, email us and we will send the key within 48 hours. The license period starts on the day of payment.
+
+Payments for custom development, consulting or other services agreed with us individually are made on our [Custom Work page](/pay); the scope and delivery of such work are as agreed between you and us before payment. Voluntary tips are non-refundable unless paid by mistake.
 
 ## 3. Free trial
 
@@ -57,4 +59,4 @@ We may update these terms. Changes do not affect licenses already purchased for 
 
 ## 9. Contact
 
-[topro@braveasy.com](mailto:topro@braveasy.com) · [Contact page](/contact)
+[topro@braveasy.com](mailto:topro@braveasy.com) · [Contact](/js-tool#contact)

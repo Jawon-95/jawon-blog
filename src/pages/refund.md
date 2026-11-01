@@ -34,4 +34,4 @@ Email [topro@braveasy.com](mailto:topro@braveasy.com) with:
 
 We reply within 48 hours. Approved refunds go back to the original payment method; your bank may take 5–10 business days to show it. The activation key is deactivated once refunded.
 
-See also: [Terms of Service](/terms) · [Privacy Policy](/privacy) · [Contact](/contact)
+See also: [Terms of Service](/terms) · [Privacy Policy](/privacy) · [Contact](/js-tool#contact)

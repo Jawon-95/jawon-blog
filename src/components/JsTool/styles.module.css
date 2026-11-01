@@ -9,10 +9,10 @@
   gap: 0.6rem 0.9rem;
   padding: 0.8rem 1rem;
   margin-bottom: 1.25rem;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 10px;
-  background: var(--ifm-background-surface-color);
-  font-size: 0.95rem;
+  border: 1px solid var(--jw-border);
+  border-radius: 12px;
+  background: var(--jw-surface-2);
+  font-size: 0.92rem;
 }
 
 .spacer {
@@ -27,12 +27,12 @@
   font-weight: 700;
 }
 .badgeOk {
-  background: #16a34a;
-  color: #fff;
+  background: var(--jw-accent-soft);
+  color: var(--jw-success);
 }
 .badgeTrial {
-  background: #f59e0b;
-  color: #1f1300;
+  background: var(--jw-warning-soft);
+  color: var(--jw-warning-text);
 }
 
 .keyInput {
@@ -40,9 +40,9 @@
   width: 260px;
   max-width: 100%;
   padding: 0.45rem 0.6rem;
-  border: 1px solid var(--ifm-color-emphasis-400);
-  border-radius: 6px;
-  background: var(--ifm-background-color);
+  border: 1px solid var(--jw-border-strong);
+  border-radius: 8px;
+  background: var(--jw-surface);
   color: var(--ifm-font-color-base);
   font-family: var(--ifm-font-family-monospace);
   font-size: 0.85rem;
@@ -51,9 +51,9 @@
 .activate,
 .run {
   border: none;
-  border-radius: 6px;
-  background: var(--ifm-color-primary);
-  color: #fff;
+  border-radius: 8px;
+  background: var(--jw-accent);
+  color: var(--jw-on-accent);
   font-weight: 600;
   cursor: pointer;
 }
@@ -62,7 +62,7 @@
 }
 .activate:hover,
 .run:hover {
-  filter: brightness(0.92);
+  background: var(--jw-accent-hover);
 }
 
 .buy {
@@ -73,7 +73,7 @@
   margin-left: auto;
   border: none;
   background: none;
-  color: var(--ifm-color-emphasis-600);
+  color: var(--jw-muted);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -89,23 +89,22 @@
   flex-direction: column;
   gap: 0.7rem;
   padding: 1rem;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 10px;
-  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--jw-border);
+  border-radius: 12px;
+  background: var(--jw-bg);
 }
 .card h3 {
   margin: 0;
-  font-size: 1.05rem;
-  color: var(--ifm-color-primary);
+  font-size: 0.98rem;
 }
 
 .area,
 .select {
   width: 100%;
   padding: 0.6rem;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 6px;
-  background: var(--ifm-background-color);
+  border: 1px solid var(--jw-border);
+  border-radius: 8px;
+  background: var(--jw-surface);
   color: var(--ifm-font-color-base);
   font-family: var(--ifm-font-family-monospace);
   font-size: 0.82rem;
@@ -118,7 +117,7 @@
 .select:focus,
 .keyInput:focus {
   outline: none;
-  border-color: var(--ifm-color-primary);
+  border-color: var(--jw-accent);
 }
 
 .run {
@@ -132,11 +131,12 @@
   z-index: 1000;
   max-width: 320px;
   padding: 0.7rem 1rem;
-  border-radius: 8px;
-  background: #1f2937;
-  color: #fff;
+  border-radius: 10px;
+  background: var(--jw-text);
+  color: var(--jw-bg);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 .toastBad {
-  background: #b91c1c;
+  background: var(--jw-danger);
+  color: #fff;
 }

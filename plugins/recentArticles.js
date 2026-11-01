@@ -44,6 +44,47 @@ function readDate(content) {
   return isNaN(d.getTime()) ? null : formatDate(d);
 }
 
+// 标题：frontmatter title > 正文第一行的一级标题 > 文件名
+function readTitle(content, file) {
+  const fm = /^---\n([\s\S]*?)\n---/.exec(content);
+  const line = fm && fm[1].split('\n').find((l) => /^title\s*:/.test(l));
+  if (line) {
+    return line.replace(/^title\s*:\s*/, '').trim().replace(/^["']|["']$/g, '');
+  }
+  const first = stripFrontmatter(content).split('\n').find((l) => l.trim());
+  const h1 = first && /^#\s+(.+)/.exec(first.trim());
+  return h1 ? h1[1].trim() : path.basename(file).replace(/\.mdx?$/, '');
+}
+
+function stripFrontmatter(content) {
+  return content.replace(/^---\n[\s\S]*?\n---\n?/, '');
+}
+
+// 摘要：正文中第一段普通文字（跳过标题、图片、代码、表格、import 等）
+function readExcerpt(content) {
+  let inCode = false;
+  for (const raw of stripFrontmatter(content).split('\n')) {
+    const line = raw.trim();
+    if (line.startsWith('```')) {
+      inCode = !inCode;
+      continue;
+    }
+    if (inCode || !line || /^(#|!\[|\||<|import |export |---)/.test(line)) {
+      continue;
+    }
+    const text = line
+      .replace(/^[>*\-+\d.\s]+/, '')
+      .replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1')
+      .replace(/<[^>]+>/g, '')
+      .replace(/[*_`~]/g, '')
+      .trim();
+    if (text.length >= 4) {
+      return text.length > 90 ? `${text.slice(0, 90)}…` : text;
+    }
+  }
+  return '';
+}
+
 module.exports = function recentArticlesPlugin(context, options = {}) {
   const {
     path: sourceDir = 'docs',
@@ -57,13 +98,18 @@ module.exports = function recentArticlesPlugin(context, options = {}) {
       const source = path.resolve(context.siteDir, sourceDir);
       return walk(source)
         .map((file) => {
-          const content = fs.readFileSync(file, 'utf8');
+          const content = fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
           const id = path
             .relative(source, file)
             .replace(/\\/g, '/')
             .replace(/\.mdx?$/, '');
           const date = readDate(content) || formatDate(fs.statSync(file).mtime);
-          return { id, date };
+          return {
+            id,
+            date,
+            title: readTitle(content, file),
+            excerpt: readExcerpt(content),
+          };
         })
         .filter((a) => !exclude.includes(a.id))
         .sort((a, b) => b.date.localeCompare(a.date))

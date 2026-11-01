@@ -1,51 +1,230 @@
+/*
+ * 全站主题：与 TOPRO 官网同一套视觉 —— 墨绿翡翠色强调、半透明流体玻璃面板、背景 01 代码雨（src/theme/Root.js）。
+ * 默认深色，另有一套浅色。--jw-* 是自定义组件使用的设计变量；--ifm-* 覆盖 Docusaurus（Infima）默认值。
+ */
 :root {
-  --ifm-heading-color: #333;
-  --ifm-color-primary: #338bff;
-  --ifm-color-black: #fff;
-  --ifm-color-success-dark: var(--ifm-color-primary);
-  --blockquote-background-color: rgba(118, 177, 255, 0.1);
-  --ifm-color-success-contrast-background: var(--blockquote-background-color);
-}
-.hero--primary {
-  --ifm-hero-background-color: #3a6999;
-}
-.hero__title {
-  color: #fff;
+  --jw-bg: #f3f4f0;
+  --jw-surface: rgba(250, 251, 247, 0.82);
+  --jw-surface-2: rgba(20, 40, 20, 0.04);
+  --jw-border: rgba(30, 50, 30, 0.13);
+  --jw-border-strong: rgba(30, 50, 30, 0.22);
+  --jw-text: #202720;
+  --jw-muted: #5e685e;
+  --jw-faint: #858e85;
+  --jw-accent: #17834f;
+  --jw-accent-hover: #126b40;
+  --jw-accent-soft: rgba(35, 184, 121, 0.12);
+  --jw-on-accent: #ffffff;
+  --jw-strong: #222b24;
+  --jw-on-strong: #ffffff;
+  --jw-success: #17834f;
+  --jw-danger: #c2410c;
+  --jw-warning-soft: rgba(229, 165, 10, 0.12);
+  --jw-warning-text: #7a5300;
+  --jw-shadow: inset 0 0 0 1px #fff9, inset 1px 3px 2px -2px #fff, inset -2px -3px 2px -2px #fff, 0 3px 10px #18301812;
+  --jw-shadow-hover: inset 0 0 0 1px #fff9, inset 1px 3px 2px -2px #fff, inset -2px -3px 2px -2px #fff, 0 10px 28px #1830181f;
+  --jw-dot: rgba(30, 50, 30, 0.07);
+  --jw-rain: #24754e;
+  --jw-rain-lead: #154d31;
+  --jw-radius: 18px;
+
+  --ifm-color-primary: #17834f;
+  --ifm-color-primary-dark: #157647;
+  --ifm-color-primary-darker: #146f43;
+  --ifm-color-primary-darkest: #105c37;
+  --ifm-color-primary-light: #199057;
+  --ifm-color-primary-lighter: #1a975b;
+  --ifm-color-primary-lightest: #1eaa67;
+  --ifm-color-success: var(--jw-success);
+  --ifm-color-danger: var(--jw-danger);
+
+  --ifm-background-color: var(--jw-bg);
+  --ifm-background-surface-color: var(--jw-surface);
+  --ifm-card-background-color: var(--jw-surface);
+  --ifm-font-color-base: var(--jw-text);
+  --ifm-heading-color: var(--jw-text);
+  --ifm-color-content-secondary: var(--jw-muted);
+  --ifm-toc-border-color: var(--jw-border);
+  --ifm-hr-border-color: var(--jw-border);
+  --ifm-table-border-color: var(--jw-border);
+  --ifm-table-stripe-background: var(--jw-surface-2);
+  --ifm-code-background: var(--jw-surface-2);
+  --ifm-navbar-background-color: color-mix(in srgb, var(--jw-bg) 78%, transparent);
+  --ifm-navbar-shadow: none;
+  --ifm-navbar-link-color: var(--jw-muted);
+  --ifm-navbar-link-hover-color: var(--jw-text);
+  --ifm-footer-background-color: color-mix(in srgb, var(--jw-bg) 88%, transparent);
+  --ifm-menu-color-background-active: var(--jw-accent-soft);
+  --ifm-menu-color-background-hover: var(--jw-surface-2);
+  --ifm-dropdown-background-color: var(--jw-bg);
+  --ifm-global-radius: 12px;
+  --ifm-button-border-radius: 999px;
+  --ifm-font-family-base: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --ifm-font-family-monospace: ui-monospace, SFMono-Regular, 'JetBrains Mono', Consolas, 'Liberation Mono', monospace;
+  --ifm-heading-font-weight: 600;
+  --ifm-link-hover-decoration: underline;
+  --docusaurus-highlighted-code-line-bg: rgba(35, 184, 121, 0.12);
+  --blockquote-background-color: var(--jw-accent-soft);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'], html[data-theme='dark'] {
-  --ifm-heading-color: #d6d6d6;
-  --ifm-color-primary: #5ba4f8;
-  --ifm-background-color: #242424;
-  --ifm-background-surface-color: #141414;
-  --ifm-color-success-contrast-background: var(--blockquote-background-color);
-} 
+[data-theme='dark'] {
+  --jw-bg: #111312;
+  --jw-surface: rgba(30, 33, 30, 0.78);
+  --jw-surface-2: rgba(255, 255, 255, 0.045);
+  --jw-border: rgba(224, 236, 222, 0.12);
+  --jw-border-strong: rgba(224, 236, 222, 0.2);
+  --jw-text: #eeefeb;
+  --jw-muted: #a0a69f;
+  --jw-faint: #737b74;
+  --jw-accent: #23b879;
+  --jw-accent-hover: #3fd394;
+  --jw-accent-soft: rgba(35, 184, 121, 0.14);
+  --jw-on-accent: #06150e;
+  --jw-strong: #f0f2ed;
+  --jw-on-strong: #171b17;
+  --jw-success: #34d399;
+  --jw-danger: #f97066;
+  --jw-warning-soft: rgba(229, 165, 10, 0.12);
+  --jw-warning-text: #f5cf6b;
+  --jw-shadow: inset 0 0 0 1px #ffffff08, inset 1px 2px 1px -1px #ffffff38, inset -1px -2px 1px -1px #ffffff14, 0 3px 10px #0002;
+  --jw-shadow-hover: inset 0 0 0 1px #ffffff0d, inset 1px 2px 1px -1px #ffffff4d, inset -1px -2px 1px -1px #ffffff1f, 0 12px 30px #0005;
+  --jw-dot: rgba(238, 239, 235, 0.06);
+  --jw-rain: #23b879;
+  --jw-rain-lead: #b8e8c9;
 
+  --ifm-color-primary: #23b879;
+  --ifm-color-primary-dark: #20a66d;
+  --ifm-color-primary-darker: #1e9c67;
+  --ifm-color-primary-darkest: #188155;
+  --ifm-color-primary-light: #27ca85;
+  --ifm-color-primary-lighter: #2ccf8b;
+  --ifm-color-primary-lightest: #4cd89d;
+  --docusaurus-highlighted-code-line-bg: rgba(35, 184, 121, 0.14);
+}
+
+html {
+  background: var(--jw-bg);
+}
+::selection {
+  background: color-mix(in srgb, var(--jw-accent) 30%, transparent);
+}
+
+/* 导航栏：玻璃 + 细分隔线，当前页绿色下划线（同 TOPRO） */
+.navbar {
+  border-bottom: 1px solid var(--jw-border);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+}
+.navbar__title {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--jw-text);
+}
+.navbar__link {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.navbar__link--active {
+  color: var(--jw-text);
+  text-decoration: underline 2px var(--jw-accent);
+  text-underline-offset: 10px;
+}
+
+/* 页脚：一行链接 + 版权 */
 .footer {
-  background-color: #2a4f75;
+  padding: 2rem 0;
+  border-top: 1px solid var(--jw-border);
+  font-size: 0.85rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
- 
+.footer__links {
+  margin-bottom: 0.75rem;
+}
+.footer__link-item {
+  color: var(--jw-muted);
+}
+.footer__link-item:hover {
+  color: var(--jw-text);
+  text-decoration: none;
+}
+.footer__link-separator {
+  color: var(--jw-faint);
+}
+.footer__copyright {
+  color: var(--jw-faint);
+}
+
+/* 按钮：胶囊形；主按钮是 TOPRO 的高亮实心按钮，次按钮是玻璃按钮 */
+.button {
+  font-weight: 600;
+  transition: transform 0.18s, background 0.18s, border-color 0.18s;
+}
+.button:hover {
+  transform: translateY(-2px);
+}
+.button--primary {
+  --ifm-button-color: var(--jw-on-strong);
+  --ifm-button-background-color: var(--jw-strong);
+  --ifm-button-border-color: transparent;
+  box-shadow: inset 0 1px #fff3, 0 2px 5px #0001;
+}
+.button--primary:hover {
+  --ifm-button-background-color: color-mix(in srgb, var(--jw-strong) 88%, var(--jw-accent));
+  --ifm-button-border-color: transparent;
+}
+.button.button--secondary {
+  color: var(--jw-text);
+}
+.button--secondary {
+  --ifm-button-color: var(--jw-text);
+  --ifm-button-background-color: var(--jw-surface-2);
+  --ifm-button-border-color: var(--jw-border);
+}
+.button--secondary:hover {
+  --ifm-button-background-color: var(--jw-accent-soft);
+  --ifm-button-border-color: var(--jw-border-strong);
+}
+.button:disabled {
+  transform: none;
+}
+
 blockquote {
   background-color: var(--blockquote-background-color);
   border-left: var(--ifm-blockquote-border-left-width) solid var(--ifm-color-primary);
+  border-radius: 0 10px 10px 0;
+}
+
+/* 文档页：正文区域、侧边栏、代码块套一层玻璃，背景代码雨不干扰阅读 */
+.theme-doc-markdown,
+.theme-doc-sidebar-menu,
+.table-of-contents {
+  position: relative;
+}
+.theme-code-block {
+  border: 1px solid var(--jw-border);
+}
+.menu__link--active:not(.menu__link--sublist) {
+  font-weight: 600;
 }
 
 .markdown h1:first-child {
-  --ifm-h1-font-size: 1.9rem;
+  --ifm-h1-font-size: 2rem;
+  letter-spacing: -0.02em;
 }
 .markdown > h2 {
-  --ifm-h2-font-size: 1.68rem;
+  --ifm-h2-font-size: 1.55rem;
 }
 .markdown > h3 {
-  --ifm-h3-font-size: 1.5rem;
+  --ifm-h3-font-size: 1.3rem;
 }
 .markdown > h4 {
-  --ifm-h4-font-size: 1.35rem;
+  --ifm-h4-font-size: 1.15rem;
 }
 .markdown > h5 {
-  --ifm-h5-font-size: 1.2rem;
+  --ifm-h5-font-size: 1.05rem;
 }
 .markdown > h6 {
-  --ifm-h6-font-size: 1.05rem;
+  --ifm-h6-font-size: 1rem;
 }

@@ -43,8 +43,7 @@ export const product = {
 
 /**
  * 价格与 https://topro.braveasy.com/pricing 保持一致。
- * stripeLink：开通 Stripe 后，把对应的 Payment Link 填进来，
- * 购买按钮会自动跳转到 Stripe 结账；留空时按钮会改为发邮件购买。
+ * 购买按钮调用 /api/checkout 创建 Stripe 结账，服务端也从这里读取价格，改价只需改这里。
  */
 export const plans = [
   {
@@ -55,7 +54,6 @@ export const plans = [
     months: 1,
     perMonth: 6,
     note: 'Standard price',
-    stripeLink: '',
   },
   {
     id: 'quarterly',
@@ -65,7 +63,6 @@ export const plans = [
     months: 3,
     perMonth: 5.1,
     note: '~14% off · save $2.6',
-    stripeLink: '',
   },
   {
     id: 'annual',
@@ -76,12 +73,25 @@ export const plans = [
     perMonth: 4.7,
     note: '~21% off · save $15.4',
     best: true,
-    stripeLink: '',
   },
 ];
 
-export function buyHref(plan) {
-  if (plan.stripeLink) return plan.stripeLink;
-  const subject = `Buy ${product.name} - ${plan.name} ($${plan.price})`;
-  return `mailto:${business.email}?subject=${encodeURIComponent(subject)}`;
+/** 前端发起 Stripe 结账：成功则跳转到 Stripe 支付页，失败抛出带原因的错误 */
+export async function startCheckout(body) {
+  const res = await fetch('/api/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.url) throw new Error(data.error || `Payment service unavailable (${res.status}).`);
+  window.location.assign(data.url);
+}
+
+export function formatMoney(amount, currency = 'usd') {
+  try {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: currency.toUpperCase() }).format(amount);
+  } catch {
+    return `${amount} ${currency.toUpperCase()}`;
+  }
 }

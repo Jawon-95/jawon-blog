@@ -58,7 +58,9 @@ docusaurus 自身缺陷：文章的文件名如果含有**英文括号**（如 `
 
 ### 售卖 JS Convert Tool
 
-- 商家信息、价格、Stripe Payment Link 统一在 `src/data/business.js` 中修改。
+- 商家信息、价格统一在 `src/data/business.js` 中修改。
+- 网站部署在 Cloudflare Pages，`functions/` 目录是服务端接口。
+- Stripe 收款配置、本地测试、`/pay` 收款页和其他网站对接方式见 [PAYMENTS.md](PAYMENTS.md)。
 - 生成激活码：
 
 ```bash

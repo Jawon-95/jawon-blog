@@ -46,4 +46,4 @@ We may update this policy. The date at the top shows the latest version.
 
 ## 9. Contact
 
-Questions about privacy: [topro@braveasy.com](mailto:topro@braveasy.com) · [Contact page](/contact)
+Questions about privacy: [topro@braveasy.com](mailto:topro@braveasy.com) · [Contact](/js-tool#contact)

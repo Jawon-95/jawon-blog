@@ -1,0 +1,29 @@
+.rain {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.36;
+  /* 两侧清晰、中间淡，正文区域不受干扰 */
+  -webkit-mask-image: linear-gradient(to right, #000, #0008 30%, #0004 50%, #0008 70%, #000);
+  mask-image: linear-gradient(to right, #000, #0008 30%, #0004 50%, #0008 70%, #000);
+}
+
+/* 文章页更淡，保证阅读 */
+:global(html.docs-doc-page) .rain {
+  opacity: 0.16;
+}
+
+@media (max-width: 620px) {
+  .rain {
+    opacity: 0.24;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rain {
+    display: none;
+  }
+}

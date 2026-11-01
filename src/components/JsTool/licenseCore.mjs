@@ -34,10 +34,22 @@ export function parseLicense(key) {
   return { valid: true, expiry: date, expired: date.getTime() < Date.now() };
 }
 
-/** 生成激活码（供 scripts/gen-license.mjs 使用） */
-export function makeLicense(expiryYYYYMMDD) {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+/**
+ * 生成激活码（供 scripts/gen-license.mjs 和 api/session.js 使用）。
+ * 传入 seed（如 Stripe Checkout Session ID）时结果固定，同一订单刷新页面拿到的是同一个码。
+ */
+export function makeLicense(expiryYYYYMMDD, seed) {
   let rand = '';
-  for (let i = 0; i < 5; i++) rand += chars[Math.floor(Math.random() * chars.length)];
+  let h = seed ? fnv1a(`${SALT}|seed|${seed}`) : 0;
+  for (let i = 0; i < 5; i++) {
+    if (seed) {
+      h = fnv1a(`${h}|${seed}|${i}`);
+      rand += CHARS[h % CHARS.length];
+    } else {
+      rand += CHARS[Math.floor(Math.random() * CHARS.length)];
+    }
+  }
   return `JWS-${expiryYYYYMMDD}-${rand}-${checksum(expiryYYYYMMDD, rand)}`;
 }
